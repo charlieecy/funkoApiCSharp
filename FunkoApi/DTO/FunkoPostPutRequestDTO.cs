@@ -14,4 +14,6 @@ public class FunkoPostPutRequestDTO
 
     [Range(0.01, 9999.99, ErrorMessage = "El precio debe estar entre 0.01 y 9999.99")]
     public double Precio { get; set; }
+
+    public string? Imagen { get; set; }
 }

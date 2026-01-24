@@ -6,4 +6,6 @@ public class FunkoResponseDTO
     public string Nombre { get; set; } = string.Empty;
     public string Categoria { get; set; } = string.Empty;
     public double Precio { get; set; }
+    
+    public string Imagen { get; set; } = "default.png";
 }

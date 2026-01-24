@@ -63,6 +63,7 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
             foundFunko.Nombre = funko.Nombre;
             foundFunko.Precio = funko.Precio;
             //Solo actualizamos la FK, no hace falta actualizar el campo como tal
+            foundFunko.Imagen = funko.Imagen;
             foundFunko.CategoryId = funko.CategoryId;
             foundFunko.UpdatedAt = DateTime.UtcNow;
             await dataBaseContext.SaveChangesAsync();

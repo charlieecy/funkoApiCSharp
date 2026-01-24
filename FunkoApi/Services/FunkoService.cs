@@ -135,6 +135,11 @@ public class FunkoService (IFunkoRepository repository, IMemoryCache cache, ICat
             foundFunko.CategoryId = foundCategory.Id;
         }
 
+        if (dto.Imagen != null)
+        {
+            foundFunko.Imagen = dto.Imagen;
+        }
+
         await _repository.UpdateAsync(id, foundFunko);
     
         _cache.Remove(CacheKeyPrefix + id);

@@ -21,4 +21,8 @@
       <PackageReference Include="NLog" Version="6.0.7" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\uploads\funkos\" />
+    </ItemGroup>
+
 </Project>

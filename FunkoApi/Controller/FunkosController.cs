@@ -2,6 +2,7 @@
 using FunkoApi.DTO;
 using FunkoApi.Error;
 using FunkoApi.Services;
+using FunkoApi.Storage;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FunkoApi.Controller;
@@ -12,7 +13,7 @@ namespace FunkoApi.Controller;
 [Route("[controller]")]
 //Especificamos que va a devolver .json
 [Produces("application/json")]
-public class FunkosController(IFunkoService service) : ControllerBase
+public class FunkosController(IFunkoService service, IFunkoStorage storage) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(List<FunkoResponseDTO>), StatusCodes.Status200OK)]
@@ -68,8 +69,23 @@ public class FunkosController(IFunkoService service) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     //Devuelve un código 409 en caso de que la categoría no exista
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> PostAsync([FromBody] FunkoPostPutRequestDTO request)
+    public async Task<IActionResult> PostAsync([FromForm] FunkoPostPutRequestDTO request, [FromForm] IFormFile? file = null)
     {
+        if (file != null)
+        {
+            var relativePath = await storage.SaveFileAsync(file, "funkos");
+            if (relativePath.IsFailure)
+            {
+                return BadRequest(new { message = relativePath.Error.Message });
+            }
+            request.Imagen = relativePath.Value;
+        }
+        
+        if (string.IsNullOrEmpty(request.Imagen))
+        {
+            return BadRequest(new { message = "El campo 'Imagen' es obligatorio en un PUT. Debe subir un archivo." });
+        }
+        
         var result = await service.CreateAsync(request);
 
         if (result.IsFailure)
@@ -100,8 +116,24 @@ public class FunkosController(IFunkoService service) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     //Devuelve un código 400 en caso de que el body tenga errores de validación
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PutAsync(long id, [FromBody] FunkoPostPutRequestDTO request)
+    public async Task<IActionResult> PutAsync(long id, [FromForm] FunkoPostPutRequestDTO request, [FromForm] IFormFile? file = null)
     {
+        
+        if (file != null)
+        {
+            var relativePath = await storage.SaveFileAsync(file, "funkos");
+            if (relativePath.IsFailure)
+            {
+                return BadRequest(new { message = relativePath.Error.Message });
+            }
+            request.Imagen = relativePath.Value;
+        }
+        
+        if (string.IsNullOrEmpty(request.Imagen))
+        {
+            return BadRequest(new { message = "El campo 'Imagen' es obligatorio en un PUT. Debe subir un archivo." });
+        }
+        
         var result = await service.UpdateAsync(id, request);
 
         if (result.IsFailure)
@@ -128,8 +160,19 @@ public class FunkosController(IFunkoService service) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     //Devuelve un código 409 en caso de que la categoría nueva no sea válida
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> PatchAsync(long id, [FromBody] FunkoPatchRequestDTO request)
+    public async Task<IActionResult> PatchAsync(long id, [FromForm] FunkoPatchRequestDTO request, [FromForm]  IFormFile? file = null)
     {
+        
+        if (file != null)
+        {
+            var relativePath = await storage.SaveFileAsync(file, "funkos");
+            if (relativePath.IsFailure)
+            {
+                return BadRequest(new { message = relativePath.Error.Message });
+            }
+            request.Imagen = relativePath.Value;
+        }
+        
         var result = await service.PatchAsync(id, request);
 
         if (result.IsFailure)
@@ -167,6 +210,7 @@ public class FunkosController(IFunkoService service) : ControllerBase
             return BadRequest(new { message = result.Error.Message });
         }
 
+        await storage.DeleteFileAsync(Path.GetFileName(result.Value.Imagen));
         return Ok(result.Value);
     }
 }

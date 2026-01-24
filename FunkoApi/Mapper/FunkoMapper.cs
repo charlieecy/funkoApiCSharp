@@ -10,10 +10,11 @@ public static class FunkoMapper
         return new Funko
         {
             Nombre = dto.Nombre,
-            Precio = dto.Precio
+            Precio = dto.Precio,
             // No asignamos dto.Categoria aquí porque Category es un objeto,
             // no un string que es como llega del DTO.
             // El CategoryId lo asignará el Service después de buscar la categoría en la DB.
+            Imagen = dto.Imagen!
         };
     }
     
@@ -24,7 +25,8 @@ public static class FunkoMapper
             Id = funko.Id,
             Nombre = funko.Nombre,
             Categoria = funko.Category.Nombre,
-            Precio = funko.Precio
+            Precio = funko.Precio,
+            Imagen = funko.Imagen
         };
     }
 

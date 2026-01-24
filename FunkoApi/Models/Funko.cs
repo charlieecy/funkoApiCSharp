@@ -6,6 +6,8 @@ namespace FunkoApi.Models;
 [Table("funkos")]
 public record Funko()
 {
+    private const string IMG_DEFAULT = "default.png";
+        
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; } = 0;
@@ -24,7 +26,9 @@ public record Funko()
     public Guid CategoryId { get; set; }
 
     // Objeto de navegación
-    public Category Category { get; set; } = null!; 
+    public Category Category { get; set; } = null!;
+
+    public string Imagen { get; set; } = IMG_DEFAULT;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
