@@ -1,0 +1,160 @@
+﻿using FunkoApi.DTO;
+using FunkoApi.Error;
+using FunkoApi.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace FunkoApi.Controller;
+
+[ApiController]
+//Hacemos que la url genérica sea /funkos, elimina la palabra controller
+//y se queda con el nombre de la clase
+[Route("[controller]")]
+//Especificamos que va a devolver .json
+[Produces("application/json")]
+public class FunkosController(IFunkoService service) : ControllerBase
+{
+    //El path es /funkos
+    [HttpGet]
+    //IEnumerable es la interfaz base de la mayoría de colecciones en 
+    //C#, de la que hereda también List
+    //Devuelve un código 200 cuyo body es la lista de FunkosDTO
+    [ProducesResponseType(typeof(IEnumerable<FunkoResponseDTO>), StatusCodes.Status200OK)]
+    //IActionResult es como el ResponseEntity de Java
+    public async Task<IActionResult> GetAllAsync()
+    {
+        return Ok(await service.GetAllAsync());
+    }
+
+    //El path es /funkos/id
+    [HttpGet("{id}")]
+    //Devuelve un código 200 con el FunkoDTO como body
+    [ProducesResponseType(typeof(FunkoResponseDTO), StatusCodes.Status200OK)]
+    //Devuelve un código 404 en caso de no encontrarse el Funko
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByIdAsync(long id)
+    {
+        var result = await service.GetByIdAsync(id);
+
+        if (result.IsFailure)
+        {
+            //ojo! el NotFound no es el error de dominio, sino el código 404 de C#
+            if (result.Error is FunkoNotFoundError)
+            {
+                return NotFound(new { message = result.Error.Message });
+            }
+            return BadRequest(new { message = result.Error.Message });
+        }
+
+        return Ok(result.Value);
+    }
+
+    //El path es /funkos
+    [HttpPost]
+    //Devuelve un código 201 con el FunkoDTO como body
+    [ProducesResponseType(typeof(FunkoResponseDTO), StatusCodes.Status201Created)]
+    //Devuelve un código 400 en caso de que el body tenga errores de validación
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    //Devuelve un código 409 en caso de que la categoría no exista
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> PostAsync([FromBody] FunkoPostPutRequestDTO request)
+    {
+        var result = await service.CreateAsync(request);
+
+        if (result.IsFailure)
+        {
+            if (result.Error is FunkoConflictError)
+            {
+                return Conflict(new { message = result.Error.Message });
+            }
+            return BadRequest(new { message = result.Error.Message });
+        }
+
+        //Devolvemos un 201
+        // 1. Nombre de la función que da el detalle (GetByIdAsync), en base a la cual se calcula la url donde podemos encontrar
+        // el Funko recién creado.
+        // 2. Parámetros para esa función (el ID del nuevo funko)
+        // 3. El objeto creado en sí
+        return CreatedAtAction(
+            nameof(GetByIdAsync),
+            new { id = result.Value.Id },
+            result.Value);
+    }
+
+    //El path es /funkos/id
+    [HttpPut("{id}")]
+    //Devuelve un código 200 con el FunkoDTO actualizado como body
+    [ProducesResponseType(typeof(FunkoResponseDTO), StatusCodes.Status200OK)]
+    //Devuelve un código 404 en caso de que el Funko a actualizar no exista
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    //Devuelve un código 400 en caso de que el body tenga errores de validación
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> PutAsync(long id, [FromBody] FunkoPostPutRequestDTO request)
+    {
+        var result = await service.UpdateAsync(id, request);
+
+        if (result.IsFailure)
+        {
+            if (result.Error is FunkoNotFoundError)
+            {
+                return NotFound(new { message = result.Error.Message });
+            }
+            if (result.Error is FunkoConflictError)
+            {
+                return Conflict(new { message = result.Error.Message });
+            }
+            return BadRequest(new { message = result.Error.Message });
+        }
+
+        return Ok(result.Value);
+    }
+
+    //El path es /funkos/id
+    [HttpPatch("{id}")]
+    //Devuelve un código 200 con el FunkoDTO actualizado parcialmente como body
+    [ProducesResponseType(typeof(FunkoResponseDTO), StatusCodes.Status200OK)]
+    //Devuelve un código 404 en caso de que el Funko a actualizar no exista
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    //Devuelve un código 409 en caso de que la categoría nueva no sea válida
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> PatchAsync(long id, [FromBody] FunkoPatchRequestDTO request)
+    {
+        var result = await service.PatchAsync(id, request);
+
+        if (result.IsFailure)
+        {
+            if (result.Error is FunkoNotFoundError)
+            {
+                return NotFound(new { message = result.Error.Message });
+            }
+            if (result.Error is FunkoConflictError)
+            {
+                return Conflict(new { message = result.Error.Message });
+            }
+            return BadRequest(new { message = result.Error.Message });
+        }
+
+        return Ok(result.Value);
+    }
+
+    //El path es /funkos/id
+    [HttpDelete("{id}")]
+    //Devuelve un código 200 con el FunkoDTO que ha sido eliminado
+    [ProducesResponseType(typeof(FunkoResponseDTO), StatusCodes.Status200OK)]
+    //Devuelve un código 404 en caso de que el Funko a eliminar no exista
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteAsync(long id)
+    {
+        var result = await service.DeleteAsync(id);
+
+        if (result.IsFailure)
+        {
+            if (result.Error is FunkoNotFoundError)
+            {
+                return NotFound(new { message = result.Error.Message });
+            }
+            return BadRequest(new { message = result.Error.Message });
+        }
+
+        return Ok(result.Value);
+    }
+}

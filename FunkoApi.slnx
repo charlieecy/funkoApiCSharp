@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="compose.yaml" />
+  </Folder>
+  <Project Path="FunkoApi/FunkoApi.csproj" />
+  <Project Path="FunkoTest/FunkoTest.csproj" />
+</Solution>

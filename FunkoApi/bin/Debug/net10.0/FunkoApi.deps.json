@@ -1,0 +1,110 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "FunkoApi/1.0.0": {
+        "dependencies": {
+          "CSharpFunctionalExtensions": "3.6.0",
+          "Microsoft.EntityFrameworkCore": "10.0.2",
+          "Microsoft.EntityFrameworkCore.InMemory": "10.0.2",
+          "NLog": "6.0.7"
+        },
+        "runtime": {
+          "FunkoApi.dll": {}
+        }
+      },
+      "CSharpFunctionalExtensions/3.6.0": {
+        "runtime": {
+          "lib/net8.0/CSharpFunctionalExtensions.dll": {
+            "assemblyVersion": "3.6.0.0",
+            "fileVersion": "3.6.0.0"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore/10.0.2": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Abstractions": "10.0.2"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.dll": {
+            "assemblyVersion": "10.0.2.0",
+            "fileVersion": "10.0.225.61305"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Abstractions/10.0.2": {
+        "runtime": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
+            "assemblyVersion": "10.0.2.0",
+            "fileVersion": "10.0.225.61305"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.InMemory/10.0.2": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "10.0.2"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "assemblyVersion": "10.0.2.0",
+            "fileVersion": "10.0.225.61305"
+          }
+        }
+      },
+      "NLog/6.0.7": {
+        "runtime": {
+          "lib/netstandard2.1/NLog.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.7.4784"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FunkoApi/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CSharpFunctionalExtensions/3.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-c+oWbfDKKjpOLPMxn/iPn1GL24YTJMtOiGfj0AsDKZ2v6/Mr6V7BfzfWLg6KqNRx3KRy3KcQE680SwvDTI/jcg==",
+      "path": "csharpfunctionalextensions/3.6.0",
+      "hashPath": "csharpfunctionalextensions.3.6.0.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore/10.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-d3+XKbLSHPCu3vwpXECoXcFbvGKmAhEeUmc1xy2czmuPnEF7rZN2HP5ZGMwCMbAKk4B01+nS4HixSMo2Vf/Y9g==",
+      "path": "microsoft.entityframeworkcore/10.0.2",
+      "hashPath": "microsoft.entityframeworkcore.10.0.2.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Abstractions/10.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BzAwIU5mYeOmnKbEXrkwx7feW2V+zUTrK/kRonSib94tjvc0/iRj2a4N6YGXRhTNjaFP3tvCMIDaX1vIFF6dkg==",
+      "path": "microsoft.entityframeworkcore.abstractions/10.0.2",
+      "hashPath": "microsoft.entityframeworkcore.abstractions.10.0.2.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.InMemory/10.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tW3LlDffLljRCGG6w7D1Uz8eI7r+uZ/prpCKutlp+ZILTjxHmkYGYQg+veBbjZ1nZe5vpIr3Z51qMF6rlmdX5A==",
+      "path": "microsoft.entityframeworkcore.inmemory/10.0.2",
+      "hashPath": "microsoft.entityframeworkcore.inmemory.10.0.2.nupkg.sha512"
+    },
+    "NLog/6.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-16kwDY6+/TCBToyXekpcl5mxprUWuXqltdOK26w44E0rTQTiRCjXv1VVLDtSbgMCR1RirVvr+V/9T+76cwuqnw==",
+      "path": "nlog/6.0.7",
+      "hashPath": "nlog.6.0.7.nupkg.sha512"
+    }
+  }
+}
