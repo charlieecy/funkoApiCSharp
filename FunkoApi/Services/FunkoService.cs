@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Linq.Expressions;
+using CSharpFunctionalExtensions;
 using FunkoApi.DTO;
 using FunkoApi.Error;
 using FunkoApi.Mapper;
@@ -39,13 +40,21 @@ public class FunkoService (IFunkoRepository repository, IMemoryCache cache, ICat
         return funko.ToDto();
     }
 
-    public async Task<List<FunkoResponseDTO>> GetAllAsync()
+    public async Task<Result<PageResponse<FunkoResponseDTO>, FunkoError>> GetAllAsync(FilterDTO filter)
     {
-        var funkos = await _repository.GetAllAsync();
-        
-        return funkos
-            .Select(it => it.ToDto())
-            .ToList();
+
+        var (funkos, totalCount) = await _repository.GetAllAsync(filter);
+        var response = funkos.Select(it => it.ToDto()).ToList();
+
+        var page = new PageResponse<FunkoResponseDTO>
+        {
+            Items = response,
+            TotalCount = totalCount,
+            Page = filter.Page,
+            Size = filter.Size
+        };
+
+        return Result.Success<PageResponse<FunkoResponseDTO>, FunkoError>(page);
     }
 
     public async Task<Result<FunkoResponseDTO, FunkoError>> CreateAsync(FunkoPostPutRequestDTO dto)
@@ -144,4 +153,5 @@ public class FunkoService (IFunkoRepository repository, IMemoryCache cache, ICat
         _cache.Remove(CacheKeyPrefix + id);
         return deletedFunko.ToDto();
     }
+    
 }

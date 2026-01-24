@@ -1,4 +1,5 @@
-﻿using FunkoApi.DTO;
+﻿using CSharpFunctionalExtensions;
+using FunkoApi.DTO;
 using FunkoApi.Error;
 using FunkoApi.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +14,27 @@ namespace FunkoApi.Controller;
 [Produces("application/json")]
 public class FunkosController(IFunkoService service) : ControllerBase
 {
-    //El path es /funkos
     [HttpGet]
-    //IEnumerable es la interfaz base de la mayoría de colecciones en 
-    //C#, de la que hereda también List
-    //Devuelve un código 200 cuyo body es la lista de FunkosDTO
-    [ProducesResponseType(typeof(IEnumerable<FunkoResponseDTO>), StatusCodes.Status200OK)]
-    //IActionResult es como el ResponseEntity de Java
-    public async Task<IActionResult> GetAllAsync()
+    [ProducesResponseType(typeof(List<FunkoResponseDTO>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll(
+        [FromQuery] string? nombre = null,
+        [FromQuery] string? categoria  = null,
+        [FromQuery] double? maxPrecio = null,
+        [FromQuery] int page = 0,
+        [FromQuery] int size = 10,
+        [FromQuery] string sortby = "id",
+        [FromQuery] string direction = "asc")
     {
-        return Ok(await service.GetAllAsync());
+        var filter = new FilterDTO(nombre, categoria, maxPrecio, page, size, direction);
+        var result = await service.GetAllAsync(filter);
+        return result.Match(
+            onSuccess: Ok,
+            onFailure:error => error switch
+            {
+                FunkoNotFoundError => NotFound(new {message = error.Message}),
+                _ => StatusCode(500, new { message = error.Message})
+            }
+        );
     }
 
     //El path es /funkos/id

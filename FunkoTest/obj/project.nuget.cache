@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AFcQlJKFYmQ=",
+  "dgSpecHash": "ZANLRVv0Skk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoTest\\FunkoTest.csproj",
+  "projectFilePath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoTest\\FunkoTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\carlo\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\microsoft.applicationinsights\\2.22.0\\microsoft.applicationinsights.2.22.0.nupkg.sha512",

@@ -7,7 +7,7 @@ namespace FunkoApi.Services;
 public interface IFunkoService
 {
     Task<Result<FunkoResponseDTO, FunkoError>>  GetByIdAsync(long id);
-    Task<List<FunkoResponseDTO>> GetAllAsync();
+    Task<Result<PageResponse<FunkoResponseDTO>, FunkoError>> GetAllAsync(FilterDTO filter);
     Task<Result<FunkoResponseDTO, FunkoError>> CreateAsync(FunkoPostPutRequestDTO dto);
     Task<Result<FunkoResponseDTO, FunkoError>> UpdateAsync(long id, FunkoPostPutRequestDTO dto);
     Task<Result<FunkoResponseDTO, FunkoError>> PatchAsync(long id, FunkoPatchRequestDTO dto);

@@ -2089,11 +2089,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoTest\\FunkoTest.csproj",
+      "projectUniqueName": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoTest\\FunkoTest.csproj",
       "projectName": "FunkoTest",
-      "projectPath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoTest\\FunkoTest.csproj",
+      "projectPath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoTest\\FunkoTest.csproj",
       "packagesPath": "C:\\Users\\carlo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoTest\\obj\\",
+      "outputPath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\carlo\\AppData\\Roaming\\NuGet\\NuGet.Config"

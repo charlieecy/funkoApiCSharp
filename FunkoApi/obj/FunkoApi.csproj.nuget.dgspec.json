@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoApi\\FunkoApi.csproj": {}
+    "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoApi\\FunkoApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoApi\\FunkoApi.csproj": {
+    "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoApi\\FunkoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoApi\\FunkoApi.csproj",
+        "projectUniqueName": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoApi\\FunkoApi.csproj",
         "projectName": "FunkoApi",
-        "projectPath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoApi\\FunkoApi.csproj",
+        "projectPath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoApi\\FunkoApi.csproj",
         "packagesPath": "C:\\Users\\carlo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\FunkoApi\\obj\\",
+        "outputPath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\carlo\\AppData\\Roaming\\NuGet\\NuGet.Config"

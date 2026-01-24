@@ -1,4 +1,6 @@
-﻿using FunkoApi.DataBase;
+﻿using System.Linq.Expressions;
+using FunkoApi.DataBase;
+using FunkoApi.DTO;
 using FunkoApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,18 +19,31 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
         
         return foundFunko;
     }
-
-    public async Task<List<Funko>> GetAllAsync()
+    public async Task<(IEnumerable<Funko> Items, int TotalCount)> GetAllAsync(FilterDTO filter)
     {
-        // Include carga la relación Category para todos los Funkos
-        // Evita el NullReferenceException en el mapper
-        var funkos = await dataBaseContext.Funkos
-            .Include(f => f.Category)
-            .ToListAsync();
-        
-        return funkos;
-    }
+        var query = dataBaseContext.Funkos.Include(f => f.Category).AsQueryable();
 
+        if (!string.IsNullOrWhiteSpace(filter.Nombre))
+            query = query.Where(p => EF.Functions.Like(p.Nombre, $"%{filter.Nombre}%"));
+
+        if (!string.IsNullOrWhiteSpace(filter.Categoria))
+            query = query.Where(p => EF.Functions.Like(p.Category!.Nombre, $"%{filter.Categoria}%"));
+
+        if (filter.MaxPrecio.HasValue)
+            query = query.Where(p => p.Precio <= filter.MaxPrecio.Value);
+
+
+        var totalCount = await query.CountAsync();
+        query = ApplySorting(query, filter.SortBy, filter.Direction);
+
+        var items = await query
+            .Skip(filter.Page * filter.Size)
+            .Take(filter.Size)
+            .ToListAsync();
+
+        return (items, totalCount);
+    }
+    
     public async Task<Funko> CreateAsync(Funko funko)
     {
         var savedFunko = await dataBaseContext.Funkos.AddAsync(funko);
@@ -73,5 +88,19 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
         }
     
         return null;
+    }
+    
+    private static IQueryable<Funko> ApplySorting(IQueryable<Funko> query, string sortBy, string direction)
+    {
+        var isDescending = direction.Equals("desc", StringComparison.OrdinalIgnoreCase);
+        Expression<Func<Funko, object>> keySelector = sortBy.ToLower() switch
+        {
+            "nombre" => p => p.Nombre,
+            "precio" => p => p.Precio,
+            "createdat" => p => p.CreatedAt,
+            "categoria" => p => p.Category!.Nombre,
+            _ => p => p.Id
+        };
+        return isDescending ? query.OrderByDescending(keySelector) : query.OrderBy(keySelector);
     }
 }
