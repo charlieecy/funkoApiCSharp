@@ -27,7 +27,8 @@ builder.Services.AddScoped<IFunkoRepository, FunkoRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IFunkoService, FunkoService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IFunkoStorage, FunkoStorage>();
+builder.Services.AddScoped<IFunkoStorage, FunkoStorageService>();
+
 
 // Añadimos el servicio de caché en memoria que utiliza el FunkoService
 builder.Services.AddMemoryCache();

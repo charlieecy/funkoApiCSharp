@@ -49,6 +49,26 @@
               "target": "Package",
               "version": "[3.6.0, )"
             },
+            "GreenDonut": {
+              "target": "Package",
+              "version": "[16.0.0-p.10.34, )"
+            },
+            "HotChocolate": {
+              "target": "Package",
+              "version": "[16.0.0-p.10.34, )"
+            },
+            "HotChocolate.Authorization": {
+              "target": "Package",
+              "version": "[16.0.0-p.10.34, )"
+            },
+            "HotChocolate.Data.EntityFramework": {
+              "target": "Package",
+              "version": "[16.0.0-p.10.34, )"
+            },
+            "Metaphor.HotChocolate.Subscriptions.InMemory": {
+              "target": "Package",
+              "version": "[0.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[10.0.2, )"

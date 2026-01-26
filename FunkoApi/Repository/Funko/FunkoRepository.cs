@@ -44,6 +44,14 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
         return (items, totalCount);
     }
     
+    // OJO, devuelve IQueryable<Funko>, NO Task<List<Funko>>, porque se usa
+    //el AsNoTracking() para ganar velocidad al hacer consultas con GraphQL
+    public IQueryable<Funko> FindAllAsNoTracking()
+    {
+        //NO tenemos un .toList()
+        return dataBaseContext.Funkos.AsNoTracking();
+    }
+    
     public async Task<Funko> CreateAsync(Funko funko)
     {
         var savedFunko = await dataBaseContext.Funkos.AddAsync(funko);

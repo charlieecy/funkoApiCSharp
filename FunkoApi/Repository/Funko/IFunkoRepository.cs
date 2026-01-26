@@ -11,4 +11,7 @@ public interface IFunkoRepository
     Task<Funko?> UpdateAsync(long id, Funko funko);
     Task<Funko?> DeleteAsync(long id);
     
+    //GraphQL
+    IQueryable<Funko> FindAllAsNoTracking();
+
 }

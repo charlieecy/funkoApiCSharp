@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FunkoTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9293db857f0f924d69d3e0c07a314aacfaa8bb04")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e26d9c514cdd084986752ae269ecebd6607af2c")]
 [assembly: System.Reflection.AssemblyProductAttribute("FunkoTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FunkoTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

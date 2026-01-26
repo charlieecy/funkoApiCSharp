@@ -23,6 +23,14 @@ public class CategoryRepository(Context dataBaseContext) : ICategoryRepository
     {
         return await dataBaseContext.Categories.ToListAsync();
     }
+    
+    // OJO, devuelve IQueryable<Category>, NO Task<List<Category>>, porque se usa
+    //el AsNoTracking() para ganar velocidad al hacer consultas con GraphQL
+    public IQueryable<Category> FindAllAsNoTracking()
+    {
+        //NO tenemos un .toList()
+        return dataBaseContext.Categories.AsNoTracking();
+    }
 
     public async Task<Category> CreateAsync(Category category)
     {

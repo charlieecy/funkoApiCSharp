@@ -4,16 +4,16 @@ using FunkoApi.Error;
 namespace FunkoApi.Storage;
 
 
-public class FunkoStorage : IFunkoStorage
+public class FunkoStorageService : IFunkoStorage
 {
     private readonly string _rootPath;
     private readonly string _uploadPath;
     private readonly long _maxFileSize;
     private readonly string[] _allowedExtensions;
     private readonly string[] _allowedContentTypes;
-    private readonly ILogger<FunkoStorage> _logger;
+    private readonly ILogger<FunkoStorageService> _logger;
     
-    public FunkoStorage(IConfiguration configuration, ILogger<FunkoStorage> logger, IWebHostEnvironment env)
+    public FunkoStorageService(IConfiguration configuration, ILogger<FunkoStorageService> logger, IWebHostEnvironment env)
     {
         _logger = logger;
 
