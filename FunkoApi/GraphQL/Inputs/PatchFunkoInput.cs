@@ -1,4 +1,6 @@
-﻿namespace FunkoApi.GraphQL.Inputs;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FunkoApi.GraphQL.Inputs;
 
 public record PatchFunkoInput
 {

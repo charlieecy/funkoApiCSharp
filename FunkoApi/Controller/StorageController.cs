@@ -1,5 +1,6 @@
 ﻿using FunkoApi.Storage;
 using Microsoft.AspNetCore.Mvc;
+using Path = System.IO.Path;
 
 namespace FunkoApi.Controller;
 

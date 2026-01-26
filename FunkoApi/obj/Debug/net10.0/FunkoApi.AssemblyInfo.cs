@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FunkoApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e26d9c514cdd084986752ae269ecebd6607af2c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3c4b987da4703c2e4f5822213c9b114f9cac081")]
 [assembly: System.Reflection.AssemblyProductAttribute("FunkoApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FunkoApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

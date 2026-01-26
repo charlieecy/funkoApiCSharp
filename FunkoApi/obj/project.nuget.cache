@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "csha3uaPy9w=",
+  "dgSpecHash": "sXYuJ+OyXZo=",
   "success": true,
   "projectFilePath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoApi\\FunkoApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\carlo\\.nuget\\packages\\chillicream.nitro.app\\29.0.1\\chillicream.nitro.app.29.0.1.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\csharpfunctionalextensions\\3.6.0\\csharpfunctionalextensions.3.6.0.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\graphql\\8.8.3\\graphql.8.8.3.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\graphql-parser\\9.5.0\\graphql-parser.9.5.0.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\graphql.analyzers\\8.8.3\\graphql.analyzers.8.8.3.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\greendonut\\16.0.0-p.10.34\\greendonut.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\greendonut.abstractions\\16.0.0-p.10.34\\greendonut.abstractions.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\greendonut.data\\16.0.0-p.10.34\\greendonut.data.16.0.0-p.10.34.nupkg.sha512",
@@ -13,6 +17,9 @@
     "C:\\Users\\carlo\\.nuget\\packages\\greendonut.data.primitives\\16.0.0-p.10.34\\greendonut.data.primitives.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate\\16.0.0-p.10.34\\hotchocolate.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.abstractions\\16.0.0-p.10.34\\hotchocolate.abstractions.16.0.0-p.10.34.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.aspnetcore\\16.0.0-p.10.34\\hotchocolate.aspnetcore.16.0.0-p.10.34.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.aspnetcore.authorization\\16.0.0-p.10.34\\hotchocolate.aspnetcore.authorization.16.0.0-p.10.34.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.aspnetcore.pipeline\\16.0.0-p.10.34\\hotchocolate.aspnetcore.pipeline.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.authorization\\16.0.0-p.10.34\\hotchocolate.authorization.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.caching.memory\\16.0.0-p.10.34\\hotchocolate.caching.memory.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.costanalysis\\16.0.0-p.10.34\\hotchocolate.costanalysis.16.0.0-p.10.34.nupkg.sha512",
@@ -34,7 +41,10 @@
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.persistedoperations.abstractions\\16.0.0-p.10.34\\hotchocolate.persistedoperations.abstractions.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.persistedoperations.pipeline\\16.0.0-p.10.34\\hotchocolate.persistedoperations.pipeline.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.primitives\\16.0.0-p.10.34\\hotchocolate.primitives.16.0.0-p.10.34.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.subscriptions\\16.0.0-p.10.34\\hotchocolate.subscriptions.16.0.0-p.10.34.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.subscriptions.inmemory\\16.0.0-p.10.34\\hotchocolate.subscriptions.inmemory.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.transport.formatters\\16.0.0-p.10.34\\hotchocolate.transport.formatters.16.0.0-p.10.34.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.transport.sockets\\16.0.0-p.10.34\\hotchocolate.transport.sockets.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.types\\16.0.0-p.10.34\\hotchocolate.types.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.types.abstractions\\16.0.0-p.10.34\\hotchocolate.types.abstractions.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.types.cursorpagination\\16.0.0-p.10.34\\hotchocolate.types.cursorpagination.16.0.0-p.10.34.nupkg.sha512",
@@ -42,6 +52,7 @@
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.types.errors\\16.0.0-p.10.34\\hotchocolate.types.errors.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.types.mutations\\16.0.0-p.10.34\\hotchocolate.types.mutations.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.types.queries\\16.0.0-p.10.34\\hotchocolate.types.queries.16.0.0-p.10.34.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.types.scalars.upload\\16.0.0-p.10.34\\hotchocolate.types.scalars.upload.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.types.shared\\16.0.0-p.10.34\\hotchocolate.types.shared.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.utilities\\16.0.0-p.10.34\\hotchocolate.utilities.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.utilities.base36\\16.0.0-p.10.34\\hotchocolate.utilities.base36.16.0.0-p.10.34.nupkg.sha512",
@@ -62,7 +73,9 @@
     "C:\\Users\\carlo\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.2\\microsoft.entityframeworkcore.abstractions.10.0.2.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.2\\microsoft.entityframeworkcore.analyzers.10.0.2.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\10.0.2\\microsoft.entityframeworkcore.inmemory.10.0.2.nupkg.sha512",
-    "C:\\Users\\carlo\\.nuget\\packages\\nlog\\6.0.7\\nlog.6.0.7.nupkg.sha512"
+    "C:\\Users\\carlo\\.nuget\\packages\\nlog\\6.0.7\\nlog.6.0.7.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\system.io.hashing\\8.0.0\\system.io.hashing.8.0.0.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\yarp.reverseproxy\\2.3.0\\yarp.reverseproxy.2.3.0.nupkg.sha512"
   ],
   "logs": []
 }

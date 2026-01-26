@@ -10,72 +10,100 @@ namespace FunkoApi.GraphQL.Mutations;
 public class FunkoMutations
 {
     
-    private readonly IFunkoService _funkoService;
-
-    public FunkoMutations(IFunkoService funkoService)
-    {
-        _funkoService = funkoService;
-    }
-    
-    public async Task<Result<FunkoResponseDTO, FunkoError>> CreateFunkoAsync(
+    public async Task<FunkoResponseDTO> CreateFunkoAsync(
         PostPutFunkoInput input,
         [Service] IFunkoService funkoService
     )
     {
-        //Transformamos el input a DTO para poder pasárselo al servicio
         var dto = new FunkoPostPutRequestDTO()
         {
-            Nombre =  input.Nombre,
-            Categoria =  input.Categoria,
-            Precio =  input.Precio,
+            Nombre = input.Nombre,
+            Categoria = input.Categoria,
+            Precio = input.Precio,
             Imagen = input.Imagen,
         };
-        //Lo creamos llamando al servicio
-        return await funkoService.CreateAsync(dto);
+
+        var result = await funkoService.CreateAsync(dto);
+        // Usamos Match para desenvolver el Result: 
+        // Si es Success, devuelve el DTO. Si es Failure, lanza una excepción de GraphQL.
+        return result.Match(
+            success => success,
+            error => throw new GraphQLException(ErrorBuilder.New()
+                .SetMessage(error.Message)
+                .SetCode(error.GetType().ToString())
+                .Build())
+        );
     }
-    
-    public async Task<Result<FunkoResponseDTO, FunkoError>> UpdateFunkoAsync(
+
+    public async Task<FunkoResponseDTO> UpdateFunkoAsync(
         long id,
         PostPutFunkoInput input,
         [Service] IFunkoService funkoService
     )
     {
-        //Transformamos el input a DTO para poder pasárselo al servicio
         var dto = new FunkoPostPutRequestDTO()
         {
-            Nombre =  input.Nombre,
-            Categoria =  input.Categoria,
-            Precio =  input.Precio,
+            Nombre = input.Nombre,
+            Categoria = input.Categoria,
+            Precio = input.Precio,
             Imagen = input.Imagen,
         };
-        //Lo actualizamos llamando al servicio
-        return await funkoService.UpdateAsync(id, dto);
+
+        var result = await funkoService.UpdateAsync(id, dto);
+
+        // Usamos Match para desenvolver el Result: 
+        // Si es Success, devuelve el DTO. Si es Failure, lanza una excepción de GraphQL.
+        return result.Match(
+            success => success,
+            error => throw new GraphQLException(ErrorBuilder.New()
+                .SetMessage(error.Message)
+                .SetCode(error.GetType().ToString())
+                .Build())
+        );
     }
 
-    public async Task<Result<FunkoResponseDTO, FunkoError>> PatchFunkoAsync(
+    public async Task<FunkoResponseDTO> PatchFunkoAsync(
         long id,
         PatchFunkoInput input,
         [Service] IFunkoService funkoService
     )
     {
-        //Transformamos el input a DTO para poder pasárselo al servicio
         var dto = new FunkoPatchRequestDTO()
         {
-            Nombre =  input.Nombre,
-            Categoria =  input.Categoria,
-            Precio =  input.Precio,
+            Nombre = input.Nombre,
+            Categoria = input.Categoria,
+            Precio = input.Precio,
             Imagen = input.Imagen,
         };
         
-        return await funkoService.PatchAsync(id, dto);
+        var result = await funkoService.PatchAsync(id, dto);
+
+        // Usamos Match para desenvolver el Result: 
+        // Si es Success, devuelve el DTO. Si es Failure, lanza una excepción de GraphQL.
+        return result.Match(
+            success => success,
+            error => throw new GraphQLException(ErrorBuilder.New()
+                .SetMessage(error.Message)
+                .SetCode(error.GetType().ToString())
+                .Build())
+        );
     }
 
-    public async Task<Result<FunkoResponseDTO, FunkoError>> DeleteFunkoAsync(
+    public async Task<FunkoResponseDTO> DeleteFunkoAsync(
         long id,
         [Service] IFunkoService funkoService
     )
     {
-        return await  funkoService.DeleteAsync(id);
+        var result = await funkoService.DeleteAsync(id);
+
+        // Usamos Match para desenvolver el Result: 
+        // Si es Success, devuelve el DTO. Si es Failure, lanza una excepción de GraphQL.
+        return result.Match(
+            success => success,
+            error => throw new GraphQLException(ErrorBuilder.New()
+                .SetMessage(error.Message)
+                .SetCode(error.GetType().ToString())
+                .Build())
+        );
     }
-    
 }

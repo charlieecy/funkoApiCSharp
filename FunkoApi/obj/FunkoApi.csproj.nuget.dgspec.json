@@ -49,6 +49,10 @@
               "target": "Package",
               "version": "[3.6.0, )"
             },
+            "GraphQL": {
+              "target": "Package",
+              "version": "[8.8.3, )"
+            },
             "GreenDonut": {
               "target": "Package",
               "version": "[16.0.0-p.10.34, )"
@@ -57,11 +61,27 @@
               "target": "Package",
               "version": "[16.0.0-p.10.34, )"
             },
+            "HotChocolate.AspNetCore": {
+              "target": "Package",
+              "version": "[16.0.0-p.10.34, )"
+            },
+            "HotChocolate.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[16.0.0-p.10.34, )"
+            },
             "HotChocolate.Authorization": {
               "target": "Package",
               "version": "[16.0.0-p.10.34, )"
             },
             "HotChocolate.Data.EntityFramework": {
+              "target": "Package",
+              "version": "[16.0.0-p.10.34, )"
+            },
+            "HotChocolate.Subscriptions.InMemory": {
+              "target": "Package",
+              "version": "[16.0.0-p.10.34, )"
+            },
+            "HotChocolate.Validation": {
               "target": "Package",
               "version": "[16.0.0-p.10.34, )"
             },

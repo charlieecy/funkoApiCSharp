@@ -1,9 +1,15 @@
 using FunkoApi.DataBase;
+using FunkoApi.GraphQL.Mutations;
+using FunkoApi.GraphQL.Publisher;
+using FunkoApi.GraphQL.Queries;
+using FunkoApi.GraphQL.Subscriptions;
+using FunkoApi.GraphQL.Types;
 using FunkoApi.Repository;
 using FunkoApi.Services;
 using FunkoApi.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using HotChocolate.Validation;
 
 // 1. EL BUILDER: Configuramos nuestro contenedor de dependencias (Servicios)
 var builder = WebApplication.CreateBuilder(args);
@@ -23,11 +29,32 @@ builder.Services.AddDbContext<Context>(options =>
 
 // Inyección de Dependencias
 // Registramos repositorios y servicios con ciclo de vida Scoped (una instancia por petición HTTP)
+//Repositorios
 builder.Services.AddScoped<IFunkoRepository, FunkoRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//Servicios
 builder.Services.AddScoped<IFunkoService, FunkoService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+//Storage
 builder.Services.AddScoped<IFunkoStorage, FunkoStorageService>();
+//Eventos
+builder.Services.AddScoped<IEventPublisher, EventPublisher>();
+//GraphQL
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<FunkoQueries>()
+    .AddMutationType<FunkoMutations>()
+    .AddSubscriptionType<FunkoSubscriptions>()
+    .AddType<FunkoType>()
+    .AddType<CategoryType>()
+    .AddInMemorySubscriptions()
+    .AddAuthorization()
+    .AddFiltering()
+    .AddSorting()
+    .AddProjections()
+    //Para obtener errores detallados
+    .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true);
+    
 
 
 // Añadimos el servicio de caché en memoria que utiliza el FunkoService
@@ -96,9 +123,14 @@ app.UseStaticFiles();
 // Habilitamos el sistema de autorización en nuestro pipeline
 app.UseAuthorization(); 
 
-
 // Mapeamos nuestros controladores para que las rutas (como /funkos) sean accesibles
 app.MapControllers(); 
+
+//Activamos WebSocket
+app.UseWebSockets();
+
+//Mapeamos el controller de GraphQL
+app.MapGraphQL();
 
 // 5. Arranca la aplicación
 app.Run();
