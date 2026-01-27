@@ -63,7 +63,7 @@
             },
             "GreenDonut": {
               "target": "Package",
-              "version": "[15.1.12, )"
+              "version": "[16.0.0-p.10.34, )"
             },
             "HotChocolate": {
               "target": "Package",
@@ -71,11 +71,11 @@
             },
             "HotChocolate.AspNetCore": {
               "target": "Package",
-              "version": "[15.1.12, )"
+              "version": "[16.0.0-p.10.34, )"
             },
             "HotChocolate.AspNetCore.Authorization": {
               "target": "Package",
-              "version": "[15.1.12, )"
+              "version": "[16.0.0-p.10.34, )"
             },
             "HotChocolate.Authorization": {
               "target": "Package",
@@ -83,11 +83,11 @@
             },
             "HotChocolate.Data.EntityFramework": {
               "target": "Package",
-              "version": "[15.1.12, )"
+              "version": "[16.0.0-p.10.34, )"
             },
             "HotChocolate.Subscriptions.InMemory": {
               "target": "Package",
-              "version": "[15.1.12, )"
+              "version": "[16.0.0-p.10.34, )"
             },
             "HotChocolate.Validation": {
               "target": "Package",
