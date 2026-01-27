@@ -4,12 +4,14 @@ using FunkoApi.GraphQL.Publisher;
 using FunkoApi.GraphQL.Queries;
 using FunkoApi.GraphQL.Subscriptions;
 using FunkoApi.GraphQL.Types;
+using FunkoApi.Mail;
 using FunkoApi.Repository;
 using FunkoApi.Services;
 using FunkoApi.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HotChocolate.Validation;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Threading.Channels;
 
 // 1. EL BUILDER: Configuramos nuestro contenedor de dependencias (Servicios)
 var builder = WebApplication.CreateBuilder(args);
@@ -54,9 +56,13 @@ builder.Services
     .AddProjections()
     //Para obtener errores detallados
     .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true);
-    
-
-
+//Email Cambiado a MailKit para enviar emails reales a Mailtrap
+// Canal para comunicación entre servicios (cola de emails)
+builder.Services.AddSingleton(Channel.CreateUnbounded<EmailMessage>());
+// Servicio de background que procesa la cola de emails
+builder.Services.AddHostedService<EmailBackgroundService>();
+// Servicio de email
+builder.Services.TryAddScoped<IEmailService, MailKitEmailService>();
 // Añadimos el servicio de caché en memoria que utiliza el FunkoService
 builder.Services.AddMemoryCache();
 
@@ -131,6 +137,7 @@ app.UseWebSockets();
 
 //Mapeamos el controller de GraphQL
 app.MapGraphQL();
+
 
 // 5. Arranca la aplicación
 app.Run();

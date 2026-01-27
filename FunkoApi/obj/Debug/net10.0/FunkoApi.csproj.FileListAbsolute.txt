@@ -263,3 +263,6 @@ C:\Users\carlo\RiderProjects\FunkoApi\funkoApiCSharp\FunkoApi\obj\Debug\net10.0\
 C:\Users\carlo\RiderProjects\FunkoApi\funkoApiCSharp\FunkoApi\obj\Debug\net10.0\FunkoApi.pdb
 C:\Users\carlo\RiderProjects\FunkoApi\funkoApiCSharp\FunkoApi\obj\Debug\net10.0\FunkoApi.genruntimeconfig.cache
 C:\Users\carlo\RiderProjects\FunkoApi\funkoApiCSharp\FunkoApi\obj\Debug\net10.0\ref\FunkoApi.dll
+C:\Users\carlo\RiderProjects\FunkoApi\funkoApiCSharp\FunkoApi\bin\Debug\net10.0\BouncyCastle.Cryptography.dll
+C:\Users\carlo\RiderProjects\FunkoApi\funkoApiCSharp\FunkoApi\bin\Debug\net10.0\MailKit.dll
+C:\Users\carlo\RiderProjects\FunkoApi\funkoApiCSharp\FunkoApi\bin\Debug\net10.0\MimeKit.dll

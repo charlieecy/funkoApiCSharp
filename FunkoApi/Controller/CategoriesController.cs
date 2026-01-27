@@ -11,7 +11,7 @@ namespace FunkoApi.Controller;
 [Route("[controller]")]
 //Especificamos que va a devolver .json
 [Produces("application/json")]
-public class CategoriesController(ICategoryService service) : ControllerBase
+public class CategoriesController(ICategoryService service, ILogger<CategoriesController> logger) : ControllerBase
 {
     //El path es /categories
     [HttpGet]
@@ -22,7 +22,10 @@ public class CategoriesController(ICategoryService service) : ControllerBase
     //IActionResult es como el ResponseEntity de Java
     public async Task<IActionResult> GetAllAsync()
     {
-        return Ok(await service.GetAllAsync());
+        logger.LogInformation("Solicitando listado completo de categorías");
+        var categories = await service.GetAllAsync();
+        logger.LogInformation("Listado de categorías obtenido exitosamente, total: {Total}", categories.Count);
+        return Ok(categories);
     }
     
     //El path es /categories/id
@@ -33,10 +36,12 @@ public class CategoriesController(ICategoryService service) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
+        logger.LogInformation("Solicitando categoría con id: {Id}", id);
         var result = await service.GetByIdAsync(id);
 
         if (result.IsFailure)
         {
+            logger.LogWarning("Categoría con id {Id} no encontrada", id);
             //ojo! el NotFound no es el error de dominio, sino el código 404 de C#
             if (result.Error is FunkoNotFoundError)
             {
@@ -45,6 +50,7 @@ public class CategoriesController(ICategoryService service) : ControllerBase
             return BadRequest(new { message = result.Error.Message });
         }
 
+        logger.LogInformation("Categoría con id {Id} obtenida exitosamente: {Nombre}", id, result.Value.Nombre);
         return Ok(result.Value);
     }
     
@@ -58,10 +64,12 @@ public class CategoriesController(ICategoryService service) : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> PostAsync([FromBody] CategoryPostPutRequestDTO request)
     {
+        logger.LogInformation("Creando nueva categoría: {Nombre}", request.Nombre);
         var result = await service.CreateAsync(request);
 
         if (result.IsFailure)
         {
+            logger.LogWarning("Error al crear categoría: {Error}", result.Error.Message);
             if (result.Error is FunkoConflictError)
             {
                 return Conflict(new { message = result.Error.Message });
@@ -69,6 +77,8 @@ public class CategoriesController(ICategoryService service) : ControllerBase
             return BadRequest(new { message = result.Error.Message });
         }
 
+        logger.LogInformation("Categoría creada exitosamente con id: {Id}, Nombre: {Nombre}", result.Value.Id, result.Value.Nombre);
+        
         //Devolvemos un 201
         // 1. Nombre de la función que da el detalle (GetByIdAsync), en base a la cual se calcula la url donde podemos encontrar
         // la Categoría recién creada.
@@ -90,10 +100,12 @@ public class CategoriesController(ICategoryService service) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PutAsync(Guid id, [FromBody] CategoryPostPutRequestDTO request)
     {
+        logger.LogInformation("Actualizando categoría con id: {Id}, Nuevo nombre: {Nombre}", id, request.Nombre);
         var result = await service.UpdateAsync(id, request);
 
         if (result.IsFailure)
         {
+            logger.LogWarning("Error al actualizar categoría id {Id}: {Error}", id, result.Error.Message);
             if (result.Error is FunkoNotFoundError)
             {
                 return NotFound(new { message = result.Error.Message });
@@ -105,6 +117,7 @@ public class CategoriesController(ICategoryService service) : ControllerBase
             return BadRequest(new { message = result.Error.Message });
         }
 
+        logger.LogInformation("Categoría id {Id} actualizada exitosamente", id);
         return Ok(result.Value);
     }
     
@@ -116,10 +129,12 @@ public class CategoriesController(ICategoryService service) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
+        logger.LogInformation("Eliminando categoría con id: {Id}", id);
         var result = await service.DeleteAsync(id);
 
         if (result.IsFailure)
         {
+            logger.LogWarning("Error al eliminar categoría id {Id}: {Error}", id, result.Error.Message);
             if (result.Error is FunkoNotFoundError)
             {
                 return NotFound(new { message = result.Error.Message });
@@ -127,6 +142,7 @@ public class CategoriesController(ICategoryService service) : ControllerBase
             return BadRequest(new { message = result.Error.Message });
         }
 
+        logger.LogInformation("Categoría id {Id} eliminada exitosamente", id);
         return Ok(result.Value);
     }
 }

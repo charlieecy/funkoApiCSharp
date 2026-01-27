@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FunkoApi.Repository;
 
-public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
+public class FunkoRepository (Context dataBaseContext, ILogger<FunkoRepository> logger) : IFunkoRepository
 {
 
     public async Task<Funko?> GetByIdAsync(long id)
     {
+        logger.LogDebug("Consultando Funko por id en BD: {Id}", id);
         // Usar Include para cargar la relación Category de forma eager loading
         // Esto previene NullReferenceException cuando se accede a funko.Category.Nombre
         var foundFunko = await dataBaseContext.Funkos
@@ -21,6 +22,9 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
     }
     public async Task<(IEnumerable<Funko> Items, int TotalCount)> GetAllAsync(FilterDTO filter)
     {
+        logger.LogDebug("Consultando Funkos con filtros - Nombre: {Nombre}, Categoria: {Categoria}, MaxPrecio: {MaxPrecio}, Page: {Page}",
+            filter.Nombre, filter.Categoria, filter.MaxPrecio, filter.Page);
+        
         var query = dataBaseContext.Funkos.Include(f => f.Category).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(filter.Nombre))
@@ -41,6 +45,7 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
             .Take(filter.Size)
             .ToListAsync();
 
+        logger.LogDebug("Consulta de Funkos completada, encontrados: {Total}", totalCount);
         return (items, totalCount);
     }
     
@@ -54,13 +59,16 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
     
     public async Task<Funko> CreateAsync(Funko funko)
     {
+        logger.LogDebug("Guardando nuevo Funko en BD: {Nombre}", funko.Nombre);
         var savedFunko = await dataBaseContext.Funkos.AddAsync(funko);
         await dataBaseContext.SaveChangesAsync();
+        logger.LogDebug("Funko guardado en BD con id: {Id}", savedFunko.Entity.Id);
         return savedFunko.Entity;
     }
 
     public async Task<Funko?> UpdateAsync(long id, Funko funko)
     {
+        logger.LogDebug("Actualizando Funko en BD con id: {Id}", id);
         var foundFunko = await dataBaseContext.Funkos
             .Include(f => f.Category)
             .FirstOrDefaultAsync(f => f.Id == id);
@@ -75,15 +83,18 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
             foundFunko.CategoryId = funko.CategoryId;
             foundFunko.UpdatedAt = DateTime.UtcNow;
             await dataBaseContext.SaveChangesAsync();
+            logger.LogDebug("Funko con id {Id} actualizado en BD", id);
             return foundFunko;
         }
 
+        logger.LogDebug("Funko con id {Id} no encontrado en BD para actualizar", id);
         return null;
     }
     
 
     public async Task<Funko?> DeleteAsync(long id)
     {
+        logger.LogDebug("Eliminando Funko de BD con id: {Id}", id);
         // Cambiamos FindAsync por FirstOrDefaultAsync con Include
         var foundFunko = await dataBaseContext.Funkos
             .Include(f => f.Category)
@@ -93,9 +104,11 @@ public class FunkoRepository (Context dataBaseContext) : IFunkoRepository
         {
             dataBaseContext.Funkos.Remove(foundFunko);
             await dataBaseContext.SaveChangesAsync();
+            logger.LogDebug("Funko con id {Id} eliminado de BD", id);
             return foundFunko; // Ahora este objeto sí lleva su Category dentro
         }
     
+        logger.LogDebug("Funko con id {Id} no encontrado en BD para eliminar", id);
         return null;
     }
     

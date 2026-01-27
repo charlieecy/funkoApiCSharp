@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "sXYuJ+OyXZo=",
+  "dgSpecHash": "H6ITPq8t+3Y=",
   "success": true,
   "projectFilePath": "C:\\Users\\carlo\\RiderProjects\\FunkoApi\\funkoApiCSharp\\FunkoApi\\FunkoApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\carlo\\.nuget\\packages\\bouncycastle.cryptography\\2.6.1\\bouncycastle.cryptography.2.6.1.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\chillicream.nitro.app\\29.0.1\\chillicream.nitro.app.29.0.1.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\csharpfunctionalextensions\\3.6.0\\csharpfunctionalextensions.3.6.0.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\graphql\\8.8.3\\graphql.8.8.3.nupkg.sha512",
@@ -60,6 +61,7 @@
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.utilities.dependencyinjection\\16.0.0-p.10.34\\hotchocolate.utilities.dependencyinjection.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.utilities.tasks\\16.0.0-p.10.34\\hotchocolate.utilities.tasks.16.0.0-p.10.34.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\hotchocolate.validation\\16.0.0-p.10.34\\hotchocolate.validation.16.0.0-p.10.34.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\mailkit\\4.14.1\\mailkit.4.14.1.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\metaphor.hotchocolate.abstractions\\0.0.3\\metaphor.hotchocolate.abstractions.0.0.3.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\metaphor.hotchocolate.execution.abstractions\\0.0.3\\metaphor.hotchocolate.execution.abstractions.0.0.3.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\metaphor.hotchocolate.language\\0.0.3\\metaphor.hotchocolate.language.0.0.3.nupkg.sha512",
@@ -73,8 +75,10 @@
     "C:\\Users\\carlo\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.2\\microsoft.entityframeworkcore.abstractions.10.0.2.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.2\\microsoft.entityframeworkcore.analyzers.10.0.2.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\10.0.2\\microsoft.entityframeworkcore.inmemory.10.0.2.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\mimekit\\4.14.0\\mimekit.4.14.0.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\nlog\\6.0.7\\nlog.6.0.7.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\system.io.hashing\\8.0.0\\system.io.hashing.8.0.0.nupkg.sha512",
+    "C:\\Users\\carlo\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
     "C:\\Users\\carlo\\.nuget\\packages\\yarp.reverseproxy\\2.3.0\\yarp.reverseproxy.2.3.0.nupkg.sha512"
   ],
   "logs": []

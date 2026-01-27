@@ -18,12 +18,22 @@
           "HotChocolate.Data.EntityFramework": "16.0.0-p.10.34",
           "HotChocolate.Subscriptions.InMemory": "16.0.0-p.10.34",
           "HotChocolate.Validation": "16.0.0-p.10.34",
+          "MailKit": "4.14.1",
           "Microsoft.EntityFrameworkCore": "10.0.2",
           "Microsoft.EntityFrameworkCore.InMemory": "10.0.2",
+          "MimeKit": "4.14.0",
           "NLog": "6.0.7"
         },
         "runtime": {
           "FunkoApi.dll": {}
+        }
+      },
+      "BouncyCastle.Cryptography/2.6.1": {
+        "runtime": {
+          "lib/net6.0/BouncyCastle.Cryptography.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.6.1.59591"
+          }
         }
       },
       "ChilliCream.Nitro.App/29.0.1": {
@@ -674,6 +684,17 @@
           }
         }
       },
+      "MailKit/4.14.1": {
+        "dependencies": {
+          "MimeKit": "4.14.0"
+        },
+        "runtime": {
+          "lib/net8.0/MailKit.dll": {
+            "assemblyVersion": "4.14.0.0",
+            "fileVersion": "4.14.1.0"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore/10.0.2": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "10.0.2"
@@ -701,6 +722,17 @@
           "lib/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
             "assemblyVersion": "10.0.2.0",
             "fileVersion": "10.0.225.61305"
+          }
+        }
+      },
+      "MimeKit/4.14.0": {
+        "dependencies": {
+          "BouncyCastle.Cryptography": "2.6.1"
+        },
+        "runtime": {
+          "lib/net8.0/MimeKit.dll": {
+            "assemblyVersion": "4.14.0.0",
+            "fileVersion": "4.14.0.0"
           }
         }
       },
@@ -738,6 +770,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BouncyCastle.Cryptography/2.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vZsG2YILhthgRqO+ZVgRff4ZFKKTl0v7kqaVBLCtRvpREhfBP33pcWrdA3PRYgWuFL1RxiUFvjMUHTdBZlJcoA==",
+      "path": "bouncycastle.cryptography/2.6.1",
+      "hashPath": "bouncycastle.cryptography.2.6.1.nupkg.sha512"
     },
     "ChilliCream.Nitro.App/29.0.1": {
       "type": "package",
@@ -1124,6 +1163,13 @@
       "path": "hotchocolate.validation/16.0.0-p.10.34",
       "hashPath": "hotchocolate.validation.16.0.0-p.10.34.nupkg.sha512"
     },
+    "MailKit/4.14.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Rawu+h3lSSjKra0AxR+IUB99VQ7jWI+MvxThekqLhf+ic7VQ7a69lmPFW+LXuRYHla4ADcn3x16Gsvju3LTq9w==",
+      "path": "mailkit/4.14.1",
+      "hashPath": "mailkit.4.14.1.nupkg.sha512"
+    },
     "Microsoft.EntityFrameworkCore/10.0.2": {
       "type": "package",
       "serviceable": true,
@@ -1144,6 +1190,13 @@
       "sha512": "sha512-tW3LlDffLljRCGG6w7D1Uz8eI7r+uZ/prpCKutlp+ZILTjxHmkYGYQg+veBbjZ1nZe5vpIr3Z51qMF6rlmdX5A==",
       "path": "microsoft.entityframeworkcore.inmemory/10.0.2",
       "hashPath": "microsoft.entityframeworkcore.inmemory.10.0.2.nupkg.sha512"
+    },
+    "MimeKit/4.14.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-g0LtsMC8DCTkc030C3UgVqbltOJmV5cz4AX8ASowz2ZA+lxopXSYtC1XXYmenxy606aWFLwi5Xy4cC/zyYjbjQ==",
+      "path": "mimekit/4.14.0",
+      "hashPath": "mimekit.4.14.0.nupkg.sha512"
     },
     "NLog/6.0.7": {
       "type": "package",
