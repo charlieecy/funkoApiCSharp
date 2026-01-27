@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Threading.Channels;
+using FunkoApi.SignalR;
 
 // 1. EL BUILDER: Configuramos nuestro contenedor de dependencias (Servicios)
 var builder = WebApplication.CreateBuilder(args);
@@ -63,6 +64,19 @@ builder.Services.AddSingleton(Channel.CreateUnbounded<EmailMessage>());
 builder.Services.AddHostedService<EmailBackgroundService>();
 // Servicio de email
 builder.Services.TryAddScoped<IEmailService, MailKitEmailService>();
+//SignalR
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSignalR", policy =>
+    {
+        policy.SetIsOriginAllowed(origin => true) 
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+builder.Services.AddSignalR();
 // Añadimos el servicio de caché en memoria que utiliza el FunkoService
 builder.Services.AddMemoryCache();
 
@@ -137,6 +151,12 @@ app.UseWebSockets();
 
 //Mapeamos el controller de GraphQL
 app.MapGraphQL();
+
+//Cors para SignalR
+app.UseCors("AllowSignalR");
+
+// SignalR Hubs, añadimos el endpoint
+app.MapHub<FunkoHub>("/hubs/funkos");
 
 
 // 5. Arranca la aplicación

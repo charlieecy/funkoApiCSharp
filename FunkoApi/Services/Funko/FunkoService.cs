@@ -8,6 +8,8 @@ using FunkoApi.Mail;
 using FunkoApi.Mapper;
 using FunkoApi.Models;
 using FunkoApi.Repository;
+using FunkoApi.SignalR;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace FunkoApi.Services;
@@ -19,6 +21,7 @@ public class FunkoService (
     IEventPublisher eventPublisher,
     IEmailService emailService,
     IConfiguration configuration,
+    IHubContext<FunkoHub> hubContext,
     ILogger<FunkoService> logger) 
     : IFunkoService
 {
@@ -95,6 +98,17 @@ public class FunkoService (
         
         //Notificamos mediante GraphQL
         GraphQlNotifyCreation(savedFunko);
+        //Notificamos mediante SignalR
+        await hubContext.Clients.Group("admins").SendAsync("NuevoFunko", new
+        {
+            savedFunko.Id,
+            savedFunko.Nombre,
+            savedFunko.Category,
+            savedFunko.Precio,
+            savedFunko.CreatedAt,
+            savedFunko.UpdatedAt
+            
+        });
         //Enviamos mail a Mailtrap
         EnviarEmailProductoCreado(savedFunko);
         
@@ -133,7 +147,17 @@ public class FunkoService (
         logger.LogInformation("Funko id {Id} actualizado exitosamente", id);
         //Notificamos mediante GraphQL
         GraphQlNotifyUpdate(updatedFunko);
-        
+        //Notificamos mediante SignalR
+        await hubContext.Clients.Group("admins").SendAsync("FunkoActualizado", new
+        {
+            updatedFunko.Id,
+            updatedFunko.Nombre,
+            updatedFunko.Category,
+            updatedFunko.Precio,
+            updatedFunko.CreatedAt,
+            updatedFunko.UpdatedAt
+            
+        });
         cache.Remove(CacheKeyPrefix + id);
         return updatedFunko.ToDto();
     }
@@ -183,7 +207,17 @@ public class FunkoService (
     
         //Notificamos mediante GraphQL
         GraphQlNotifyUpdate(foundFunko);
-        
+        //Notificamos mediante SignalR
+        await hubContext.Clients.Group("admins").SendAsync("FunkoActualizado", new
+        {
+            foundFunko.Id,
+            foundFunko.Nombre,
+            foundFunko.Category,
+            foundFunko.Precio,
+            foundFunko.CreatedAt,
+            foundFunko.UpdatedAt
+            
+        });
         cache.Remove(CacheKeyPrefix + id);
         return foundFunko.ToDto();
     }
@@ -202,7 +236,17 @@ public class FunkoService (
         logger.LogInformation("Funko id {Id} eliminado exitosamente de la BD", id);
         //Notificamos mediante GraphQL
         GraphQlNotifyDelete(deletedFunko);
-        
+        //Notificamos mediante SignalR
+        await hubContext.Clients.Group("admins").SendAsync("FunkoEliminado", new
+        {
+            deletedFunko.Id,
+            deletedFunko.Nombre,
+            deletedFunko.Category,
+            deletedFunko.Precio,
+            deletedFunko.CreatedAt,
+            deletedFunko.UpdatedAt
+            
+        });
         cache.Remove(CacheKeyPrefix + id);
         return deletedFunko.ToDto();
     }
