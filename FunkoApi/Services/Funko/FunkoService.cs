@@ -9,7 +9,6 @@ using FunkoApi.Mail;
 using FunkoApi.Mapper;
 using FunkoApi.Models;
 using FunkoApi.Repository;
-using FunkoApi.Services.Redis;
 using FunkoApi.SignalR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Distributed;

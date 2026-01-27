@@ -1,6 +1,8 @@
 using FunkoApi.GraphQL.Publisher;
 using FunkoApi.Repository;
+using FunkoApi.Repository.Users;
 using FunkoApi.Services;
+using FunkoApi.Services.Auth;
 using FunkoApi.Storage;
 
 namespace FunkoApi.Infraestructure;
@@ -13,10 +15,14 @@ public static class DependencyInjectionConfig
         // Repositorios
         services.AddScoped<IFunkoRepository, FunkoRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         
         // Servicios
         services.AddScoped<IFunkoService, FunkoService>();
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<IJwtTokenExtractor, JwtTokenExtractor>();
         
         // Storage
         services.AddScoped<IFunkoStorage, FunkoStorageService>();

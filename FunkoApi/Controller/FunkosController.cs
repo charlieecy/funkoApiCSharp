@@ -3,6 +3,7 @@ using FunkoApi.DTO;
 using FunkoApi.Error;
 using FunkoApi.Services;
 using FunkoApi.Storage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Path = System.IO.Path;
 
@@ -54,6 +55,7 @@ public class FunkosController(IFunkoService service, IFunkoStorage storage, ILog
     [ProducesResponseType(typeof(FunkoResponseDTO), StatusCodes.Status200OK)]
     //Devuelve un código 404 en caso de no encontrarse el Funko
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
     public async Task<IActionResult> GetByIdAsync(long id)
     {
         logger.LogInformation("Solicitando Funko con id: {Id}", id);
@@ -82,6 +84,7 @@ public class FunkosController(IFunkoService service, IFunkoStorage storage, ILog
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     //Devuelve un código 409 en caso de que la categoría no exista
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PostAsync([FromForm] FunkoPostPutRequestDTO request, [FromForm] IFormFile? file = null)
     {
         logger.LogInformation("Creando nuevo Funko: {Nombre}, Categoria: {Categoria}, Precio: {Precio}", 
@@ -138,6 +141,7 @@ public class FunkosController(IFunkoService service, IFunkoStorage storage, ILog
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     //Devuelve un código 400 en caso de que el body tenga errores de validación
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PutAsync(long id, [FromForm] FunkoPostPutRequestDTO request, [FromForm] IFormFile? file = null)
     {
         logger.LogInformation("Actualizando Funko con id: {Id}, Nombre: {Nombre}, Categoria: {Categoria}", 
@@ -189,6 +193,7 @@ public class FunkosController(IFunkoService service, IFunkoStorage storage, ILog
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     //Devuelve un código 409 en caso de que la categoría nueva no sea válida
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PatchAsync(long id, [FromForm] FunkoPatchRequestDTO request, [FromForm]  IFormFile? file = null)
     {
         logger.LogInformation("Aplicando PATCH a Funko id: {Id}", id);
@@ -231,6 +236,7 @@ public class FunkosController(IFunkoService service, IFunkoStorage storage, ILog
     [ProducesResponseType(typeof(FunkoResponseDTO), StatusCodes.Status200OK)]
     //Devuelve un código 404 en caso de que el Funko a eliminar no exista
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> DeleteAsync(long id)
     {
         logger.LogInformation("Eliminando Funko con id: {Id}", id);

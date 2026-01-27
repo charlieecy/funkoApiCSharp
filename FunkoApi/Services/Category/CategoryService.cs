@@ -5,7 +5,6 @@ using FunkoApi.Error;
 using FunkoApi.Mapper;
 using FunkoApi.Models;
 using FunkoApi.Repository;
-using FunkoApi.Services.Redis;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace FunkoApi.Services;
