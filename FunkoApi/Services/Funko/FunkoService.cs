@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Text.Json;
 using CSharpFunctionalExtensions;
 using FunkoApi.DTO;
 using FunkoApi.Error;
@@ -11,11 +12,12 @@ using FunkoApi.Repository;
 using FunkoApi.Services.Redis;
 using FunkoApi.SignalR;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace FunkoApi.Services;
 
 public class FunkoService (
-    ICacheService cache,
+    IDistributedCache cache,
     IFunkoRepository repository, 
     ICategoryRepository categoryRepository,
     IEventPublisher eventPublisher,
@@ -32,13 +34,18 @@ public class FunkoService (
     public async Task<Result<FunkoResponseDTO, FunkoError>> GetByIdAsync(long id)
     {
         logger.LogDebug("Buscando Funko con id: {Id}", id);
-        var cacheKey = CacheKeyPrefix +id;
+        var cacheKey = CacheKeyPrefix + id;
 
-        var cachedFunko = await cache.GetAsync<Funko>(cacheKey);
-        if (cachedFunko != null)
+        // Intentar obtener del caché
+        var cachedData = await cache.GetStringAsync(cacheKey);
+        if (cachedData != null)
         {
-            logger.LogDebug("Funko con id {Id} encontrado en caché", id);
-            return cachedFunko.ToDto();
+            var cachedFunko = JsonSerializer.Deserialize<Funko>(cachedData);
+            if (cachedFunko != null)
+            {
+                logger.LogDebug("Funko con id {Id} encontrado en caché", id);
+                return cachedFunko.ToDto();
+            }
         }
         
         var funko = await repository.GetByIdAsync(id);
@@ -48,7 +55,13 @@ public class FunkoService (
             return Result.Failure<FunkoResponseDTO, FunkoError>(new FunkoNotFoundError($"No se encontró el Funko con id: {id}."));
         }
         
-        await cache.SetAsync(cacheKey, funko, _cacheDuration);
+        // Guardar en caché con serialización JSON
+        var serializedFunko = JsonSerializer.Serialize(funko);
+        var options = new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = _cacheDuration
+        };
+        await cache.SetStringAsync(cacheKey, serializedFunko, options);
         logger.LogDebug("Funko con id {Id} obtenido de BD y almacenado en caché", id);
         return funko.ToDto();
     }

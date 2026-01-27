@@ -1,18 +1,20 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Text.Json;
+using CSharpFunctionalExtensions;
 using FunkoApi.DTO;
 using FunkoApi.Error;
 using FunkoApi.Mapper;
 using FunkoApi.Models;
 using FunkoApi.Repository;
 using FunkoApi.Services.Redis;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace FunkoApi.Services;
 
-public class CategoryService (ICategoryRepository repository, ICacheService cache, ILogger<CategoryService> logger) : ICategoryService
+public class CategoryService (ICategoryRepository repository, IDistributedCache cache, ILogger<CategoryService> logger) : ICategoryService
 {
     private const string CacheKeyPrefix = "Category_";
     private readonly ICategoryRepository _repository = repository;
-    private readonly ICacheService _cache = cache;
+    private readonly IDistributedCache _cache = cache;
     private readonly ILogger<CategoryService> _logger = logger;
     private readonly TimeSpan _cacheDuration = TimeSpan.FromMinutes(5);
 
@@ -20,13 +22,18 @@ public class CategoryService (ICategoryRepository repository, ICacheService cach
     public async Task<Result<CategoryResponseDTO, FunkoError>> GetByIdAsync(Guid id)
     {
         _logger.LogDebug("Buscando categoría con id: {Id}", id);
-        var cacheKey = CacheKeyPrefix +id;
+        var cacheKey = CacheKeyPrefix + id;
 
-        var cachedCategory = await _cache.GetAsync<Category>(cacheKey);
-        if (cachedCategory != null)
+        // Intentar obtener del caché
+        var cachedData = await _cache.GetStringAsync(cacheKey);
+        if (cachedData != null)
         {
-            _logger.LogDebug("Categoría con id {Id} encontrada en caché", id);
-            return cachedCategory.ToDto();
+            var cachedCategory = JsonSerializer.Deserialize<Category>(cachedData);
+            if (cachedCategory != null)
+            {
+                _logger.LogDebug("Categoría con id {Id} encontrada en caché", id);
+                return cachedCategory.ToDto();
+            }
         }
         
         var category = await _repository.GetByIdAsync(id);
@@ -36,7 +43,13 @@ public class CategoryService (ICategoryRepository repository, ICacheService cach
             return Result.Failure<CategoryResponseDTO, FunkoError>(new FunkoNotFoundError($"No se encontró la categoría con id: {id}."));
         }
         
-        await _cache.SetAsync(cacheKey, category, _cacheDuration);
+        // Guardar en caché con serialización JSON
+        var serializedCategory = JsonSerializer.Serialize(category);
+        var options = new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = _cacheDuration
+        };
+        await _cache.SetStringAsync(cacheKey, serializedCategory, options);
         _logger.LogDebug("Categoría con id {Id} obtenida de BD y almacenada en caché", id);
         return category.ToDto();    
     }

@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddRepositoriesAndServices();
 
 // Configuración de Cache Redis
-builder.Services.AddCache();
+builder.Services.AddCache(builder.Configuration);
 
 // Configuración de GraphQL
 builder.Services.AddGraphQL();
