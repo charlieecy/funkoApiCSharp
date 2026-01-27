@@ -45,6 +45,14 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "AspNetCoreRateLimit": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "CSharpFunctionalExtensions": {
               "target": "Package",
               "version": "[3.6.0, )"
@@ -55,7 +63,7 @@
             },
             "GreenDonut": {
               "target": "Package",
-              "version": "[16.0.0-p.10.34, )"
+              "version": "[15.1.12, )"
             },
             "HotChocolate": {
               "target": "Package",
@@ -63,11 +71,11 @@
             },
             "HotChocolate.AspNetCore": {
               "target": "Package",
-              "version": "[16.0.0-p.10.34, )"
+              "version": "[15.1.12, )"
             },
             "HotChocolate.AspNetCore.Authorization": {
               "target": "Package",
-              "version": "[16.0.0-p.10.34, )"
+              "version": "[15.1.12, )"
             },
             "HotChocolate.Authorization": {
               "target": "Package",
@@ -75,11 +83,11 @@
             },
             "HotChocolate.Data.EntityFramework": {
               "target": "Package",
-              "version": "[16.0.0-p.10.34, )"
+              "version": "[15.1.12, )"
             },
             "HotChocolate.Subscriptions.InMemory": {
               "target": "Package",
-              "version": "[16.0.0-p.10.34, )"
+              "version": "[15.1.12, )"
             },
             "HotChocolate.Validation": {
               "target": "Package",
@@ -93,11 +101,19 @@
               "target": "Package",
               "version": "[0.0.3, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[10.0.2, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[10.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[10.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
               "version": "[10.0.2, )"
             },
@@ -108,6 +124,10 @@
             "NLog": {
               "target": "Package",
               "version": "[6.0.7, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[10.0.0, )"
             }
           },
           "imports": [

@@ -158,6 +158,5 @@ app.UseCors("AllowSignalR");
 // SignalR Hubs, añadimos el endpoint
 app.MapHub<FunkoHub>("/hubs/funkos");
 
-
 // 5. Arranca la aplicación
 app.Run();

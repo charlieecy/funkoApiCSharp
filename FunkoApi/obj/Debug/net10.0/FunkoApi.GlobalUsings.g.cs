@@ -3,7 +3,6 @@ global using GreenDonut;
 global using HotChocolate;
 global using HotChocolate.Data;
 global using HotChocolate.Types;
-global using HotChocolate.Types.Composite;
 global using HotChocolate.Types.Relay;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
