@@ -4,15 +4,15 @@ using FunkoApi.Error;
 using FunkoApi.Mapper;
 using FunkoApi.Models;
 using FunkoApi.Repository;
-using Microsoft.Extensions.Caching.Memory;
+using FunkoApi.Services.Redis;
 
 namespace FunkoApi.Services;
 
-public class CategoryService (ICategoryRepository repository, IMemoryCache cache, ILogger<CategoryService> logger) : ICategoryService
+public class CategoryService (ICategoryRepository repository, ICacheService cache, ILogger<CategoryService> logger) : ICategoryService
 {
     private const string CacheKeyPrefix = "Category_";
     private readonly ICategoryRepository _repository = repository;
-    private readonly IMemoryCache _cache = cache;
+    private readonly ICacheService _cache = cache;
     private readonly ILogger<CategoryService> _logger = logger;
     private readonly TimeSpan _cacheDuration = TimeSpan.FromMinutes(5);
 
@@ -22,13 +22,11 @@ public class CategoryService (ICategoryRepository repository, IMemoryCache cache
         _logger.LogDebug("Buscando categoría con id: {Id}", id);
         var cacheKey = CacheKeyPrefix +id;
 
-        if (_cache.TryGetValue(cacheKey, out Category? cachedCategory))
+        var cachedCategory = await _cache.GetAsync<Category>(cacheKey);
+        if (cachedCategory != null)
         {
-            if (cachedCategory != null)
-            {
-                _logger.LogDebug("Categoría con id {Id} encontrada en caché", id);
-                return cachedCategory.ToDto();
-            }
+            _logger.LogDebug("Categoría con id {Id} encontrada en caché", id);
+            return cachedCategory.ToDto();
         }
         
         var category = await _repository.GetByIdAsync(id);
@@ -38,7 +36,7 @@ public class CategoryService (ICategoryRepository repository, IMemoryCache cache
             return Result.Failure<CategoryResponseDTO, FunkoError>(new FunkoNotFoundError($"No se encontró la categoría con id: {id}."));
         }
         
-        _cache.Set(cacheKey, category, _cacheDuration);
+        await _cache.SetAsync(cacheKey, category, _cacheDuration);
         _logger.LogDebug("Categoría con id {Id} obtenida de BD y almacenada en caché", id);
         return category.ToDto();    
     }
@@ -96,7 +94,7 @@ public class CategoryService (ICategoryRepository repository, IMemoryCache cache
         }
     
         _logger.LogInformation("Categoría id {Id} actualizada exitosamente", id);
-        _cache.Remove(CacheKeyPrefix + id);
+        await _cache.RemoveAsync(CacheKeyPrefix + id);
         return updatedCategory.ToDto();
     }
 
@@ -113,7 +111,7 @@ public class CategoryService (ICategoryRepository repository, IMemoryCache cache
         }
         
         _logger.LogInformation("Categoría id {Id} eliminada exitosamente de la BD", id);
-        _cache.Remove(CacheKeyPrefix + id);
+        await _cache.RemoveAsync(CacheKeyPrefix + id);
         return deletedCategory.ToDto();
     }
 }

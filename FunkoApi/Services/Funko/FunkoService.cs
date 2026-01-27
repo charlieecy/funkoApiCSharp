@@ -8,14 +8,14 @@ using FunkoApi.Mail;
 using FunkoApi.Mapper;
 using FunkoApi.Models;
 using FunkoApi.Repository;
+using FunkoApi.Services.Redis;
 using FunkoApi.SignalR;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace FunkoApi.Services;
 
 public class FunkoService (
-    IMemoryCache cache,
+    ICacheService cache,
     IFunkoRepository repository, 
     ICategoryRepository categoryRepository,
     IEventPublisher eventPublisher,
@@ -34,13 +34,11 @@ public class FunkoService (
         logger.LogDebug("Buscando Funko con id: {Id}", id);
         var cacheKey = CacheKeyPrefix +id;
 
-        if (cache.TryGetValue(cacheKey, out Funko? cachedFunko))
+        var cachedFunko = await cache.GetAsync<Funko>(cacheKey);
+        if (cachedFunko != null)
         {
-            if (cachedFunko != null)
-            {
-                logger.LogDebug("Funko con id {Id} encontrado en caché", id);
-                return cachedFunko.ToDto();
-            }
+            logger.LogDebug("Funko con id {Id} encontrado en caché", id);
+            return cachedFunko.ToDto();
         }
         
         var funko = await repository.GetByIdAsync(id);
@@ -50,7 +48,7 @@ public class FunkoService (
             return Result.Failure<FunkoResponseDTO, FunkoError>(new FunkoNotFoundError($"No se encontró el Funko con id: {id}."));
         }
         
-        cache.Set(cacheKey, funko, _cacheDuration);
+        await cache.SetAsync(cacheKey, funko, _cacheDuration);
         logger.LogDebug("Funko con id {Id} obtenido de BD y almacenado en caché", id);
         return funko.ToDto();
     }
@@ -158,7 +156,7 @@ public class FunkoService (
             updatedFunko.UpdatedAt
             
         });
-        cache.Remove(CacheKeyPrefix + id);
+        await cache.RemoveAsync(CacheKeyPrefix + id);
         return updatedFunko.ToDto();
     }
 
@@ -218,7 +216,7 @@ public class FunkoService (
             foundFunko.UpdatedAt
             
         });
-        cache.Remove(CacheKeyPrefix + id);
+        await cache.RemoveAsync(CacheKeyPrefix + id);
         return foundFunko.ToDto();
     }
 
@@ -247,7 +245,7 @@ public class FunkoService (
             deletedFunko.UpdatedAt
             
         });
-        cache.Remove(CacheKeyPrefix + id);
+        await cache.RemoveAsync(CacheKeyPrefix + id);
         return deletedFunko.ToDto();
     }
 
