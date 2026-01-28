@@ -322,7 +322,7 @@
        He respetado todas tus funciones (doLogin, connectSignalR, etc.) 
        y los IDs de los elementos para que siga funcionando al 100%.
     */
-    const API_URL = 'http://localhost:5074';
+    const API_URL = 'http://localhost:8080';
 
     let connection = null;
     let reconnectAttempts = 0;
@@ -511,7 +511,7 @@
         container.scrollTop = container.scrollHeight;
     }
 
-    document.getElementById('hubUrl').value = 'http://localhost:5074/hubs/funkos';
+    document.getElementById('hubUrl').value = 'http://localhost:8080/hubs/funkos';
 </script>
 </body>
 </html>
