@@ -1,9 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using FunkoApi.DTO;
-using FunkoApi.Error;
 using FunkoApi.GraphQL.Inputs;
 using FunkoApi.Services;
-using HotChocolate;
+using HotChocolate.Authorization;
 
 namespace FunkoApi.GraphQL.Mutations;
 
@@ -16,6 +15,7 @@ public class FunkoMutations
         _logger = logger;
     }
     
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<FunkoResponseDTO> CreateFunkoAsync(
         PostPutFunkoInput input,
         [Service] IFunkoService funkoService
@@ -49,7 +49,8 @@ public class FunkoMutations
             }
         );
     }
-
+    
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<FunkoResponseDTO> UpdateFunkoAsync(
         long id,
         PostPutFunkoInput input,
@@ -85,6 +86,7 @@ public class FunkoMutations
         );
     }
 
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<FunkoResponseDTO> PatchFunkoAsync(
         long id,
         PatchFunkoInput input,
@@ -120,6 +122,7 @@ public class FunkoMutations
         );
     }
 
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<FunkoResponseDTO> DeleteFunkoAsync(
         long id,
         [Service] IFunkoService funkoService
