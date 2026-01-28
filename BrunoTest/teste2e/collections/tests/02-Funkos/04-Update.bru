@@ -1,0 +1,28 @@
+meta {
+  name: 04-Update
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/Funkos/{{funkoId}}
+  body: multipartForm
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwtToken}}
+}
+
+body:multipart-form {
+  Nombre: FunkoUpdated
+  Categoria: MARVEL
+  Precio: 29.99
+  file: @file(placeholder.png)
+}
+
+assert {
+  res.status: eq 200
+  res.body.nombre: eq FunkoUpdated
+  res.body.precio: eq 29.99
+}

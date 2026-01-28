@@ -1,0 +1,20 @@
+meta {
+  name: 05-Delete
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/Categories/{{categoryId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwtToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{categoryId}}
+}

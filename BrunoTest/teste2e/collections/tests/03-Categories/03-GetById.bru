@@ -1,0 +1,20 @@
+meta {
+  name: 03-GetById
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/Categories/{{categoryId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwtToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{categoryId}}
+}

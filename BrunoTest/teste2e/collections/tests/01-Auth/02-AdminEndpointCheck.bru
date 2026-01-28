@@ -1,0 +1,19 @@
+meta {
+  name: 03-AdminEndpointCheck
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{baseUrl}}/Funko/999999
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwtToken}}
+}
+
+assert {
+  res.status: neq 401
+}
