@@ -44,11 +44,7 @@ public class AuthService(
 
         return Result.Success<AuthResponseDTO, AuthError>(authResponse);
     }
-
-    /// <summary>
-    /// Autentica un usuario existente.
-    /// Devuelve: Result.Success(AuthResponseDto) | Result.Failure(Validation/Unauthorized/NotFound)
-    /// </summary>
+    
     public async Task<Result<AuthResponseDTO, AuthError>> SignInAsync(LoginDto dto)
     {
         var sanitizedUsername = dto.Username?.Replace("\n", "").Replace("\r", "");

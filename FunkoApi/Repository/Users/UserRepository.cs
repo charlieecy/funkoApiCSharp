@@ -75,16 +75,5 @@ public class UserRepository(
             .ToListAsync();
     }
 
-    private static IQueryable<User> ApplySorting(IQueryable<User> query, string sortBy, string direction)
-    {
-        var isDescending = direction.Equals("desc", StringComparison.OrdinalIgnoreCase);
-        Expression<Func<User, object>> keySelector = sortBy.ToLower() switch
-        {
-            "username" => u => u.Username,
-            "email" => u => u.Email,
-            "createdat" => u => u.CreatedAt,
-            _ => u => u.Id
-        };
-        return isDescending ? query.OrderByDescending(keySelector) : query.OrderBy(keySelector);
-    }
+
 }

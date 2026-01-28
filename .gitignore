@@ -1,0 +1,27 @@
+﻿# Environment files
+.env
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+*.sln.DotSettings.user
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Logs
+*.log
+logs.txt
+
+# Test generated files
+FunkoTest/obj/
