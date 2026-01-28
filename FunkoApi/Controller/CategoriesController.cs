@@ -1,6 +1,7 @@
 ﻿using FunkoApi.DTO;
 using FunkoApi.Error;
 using FunkoApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FunkoApi.Controller;
@@ -20,6 +21,7 @@ public class CategoriesController(ICategoryService service, ILogger<CategoriesCo
     //Devuelve un código 200 cuyo body es la lista de CategoryDTO
     [ProducesResponseType(typeof(IEnumerable<CategoryResponseDTO>), StatusCodes.Status200OK)]
     //IActionResult es como el ResponseEntity de Java
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllAsync()
     {
         logger.LogInformation("Solicitando listado completo de categorías");
@@ -34,6 +36,7 @@ public class CategoriesController(ICategoryService service, ILogger<CategoriesCo
     [ProducesResponseType(typeof(CategoryResponseDTO), StatusCodes.Status200OK)]
     //Devuelve un código 404 en caso de no encontrarse la Categoría
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize] //Simplemente logueado, independientemente del rol que tenga
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         logger.LogInformation("Solicitando categoría con id: {Id}", id);
@@ -62,6 +65,7 @@ public class CategoriesController(ICategoryService service, ILogger<CategoriesCo
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     //Devuelve un código 409 en caso de que la categoría ya exista
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PostAsync([FromBody] CategoryPostPutRequestDTO request)
     {
         logger.LogInformation("Creando nueva categoría: {Nombre}", request.Nombre);
@@ -98,6 +102,7 @@ public class CategoriesController(ICategoryService service, ILogger<CategoriesCo
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     //Devuelve un código 400 en caso de que el body tenga errores de validación
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PutAsync(Guid id, [FromBody] CategoryPostPutRequestDTO request)
     {
         logger.LogInformation("Actualizando categoría con id: {Id}, Nuevo nombre: {Nombre}", id, request.Nombre);
@@ -127,6 +132,7 @@ public class CategoriesController(ICategoryService service, ILogger<CategoriesCo
     [ProducesResponseType(typeof(CategoryResponseDTO), StatusCodes.Status200OK)]
     //Devuelve un código 404 en caso de que la Categoría a eliminar no exista
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
         logger.LogInformation("Eliminando categoría con id: {Id}", id);

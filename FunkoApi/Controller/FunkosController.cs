@@ -19,6 +19,7 @@ public class FunkosController(IFunkoService service, IFunkoStorage storage, ILog
 {
     [HttpGet]
     [ProducesResponseType(typeof(List<FunkoResponseDTO>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll(
         [FromQuery] string? nombre = null,
         [FromQuery] string? categoria  = null,
