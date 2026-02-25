@@ -1,0 +1,26 @@
+meta {
+  name: 04-Update
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/Categories/{{categoryId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{jwtToken}}
+}
+
+body:json {
+  {
+    "nombre": "CategoryUpdated"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.nombre: eq CategoryUpdated
+}

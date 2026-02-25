@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "test e2e"
+  type: workspace
+
+collections:
+  - name: "tests"
+    path: "collections\\tests"
+
+specs:
+
+docs: ''
